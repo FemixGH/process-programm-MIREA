@@ -1,0 +1,24 @@
+#include <iostream>
+#include <cmath> 
+using namespace std;
+int main()
+{
+    bool lamp, curtains, day;
+    cout << "It is day?  " << endl;
+    cin >> day;
+    cout << "Do you have curtains?  " << endl;
+    cin >> curtains;
+    cout << "Lamp is working ? " << endl;
+    cin >> lamp;
+  
+
+    if ((day == true and curtains == true) || lamp == true) {
+        cout << "light illuminates the room" << endl;
+        exit(0);
+    }
+
+    else {
+        cout << "darkness engulfed the room" << endl;
+        exit(0);
+    }
+}
