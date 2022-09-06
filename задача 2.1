@@ -1,0 +1,23 @@
+#include <iostream>
+#include <cmath> 
+
+using namespace std;
+int main()
+{
+
+    float area, radiusBig, height, radiusSmall, volume, lenght;
+    float pi = 3.14;
+    cout << "Enter lenght: " << endl;
+    cin >> lenght;
+    cout << "Enter radiusBig: " << endl;
+    cin >> radiusBig;
+    cout << "Enter radiusSmall: " << endl;
+    cin >> radiusSmall;
+    cout << "Enter height: " << endl;
+    cin >> height;
+   
+    volume = 0.33* (pi * height * ((radiusBig * radiusBig) + (radiusBig * radiusSmall) + (radiusSmall * radiusSmall)));
+    area = pi * ((radiusBig * radiusBig) + ((radiusBig + radiusSmall) * lenght) + (radiusSmall * radiusSmall));
+    cout << "Volume = " << volume << endl;
+    cout << "area = " << area << endl;
+}
