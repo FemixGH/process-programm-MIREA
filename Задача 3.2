@@ -1,0 +1,25 @@
+#include <iostream>
+#include <cmath> 
+#include <math.h>
+
+using namespace std;
+int main()
+{
+	float s, m, n, p;
+	cout << "Enter S: " << endl;
+	cin >> s;
+	cout << "Enter m: " << endl;
+	cin >> m;
+	cout << "Enter n: " << endl;
+	cin >> n;
+
+	/*m = ((s * r * (pow((1 + r), n))) / ((12 * (pow((1 + r), n) - 11))));
+	cout << "m = " << m << endl;*/
+
+	p = ((12 * m - 1) / s) * 100;
+	if (p > 100) {
+		cout << "Error" << endl;
+		exit(0);
+	}
+	cout << "percent = " << p << endl;
+}
