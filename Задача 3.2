@@ -5,21 +5,27 @@
 using namespace std;
 int main()
 {
-	float s, m, n, p;
+	double s, m, n, m0, r, p;
 	cout << "Enter S: " << endl;
 	cin >> s;
 	cout << "Enter m: " << endl;
 	cin >> m;
 	cout << "Enter n: " << endl;
 	cin >> n;
-
-	/*m = ((s * r * (pow((1 + r), n))) / ((12 * (pow((1 + r), n) - 11))));
+	m0 = -100000;
+	p = 1;
+	/*m = ((s * r * (pow((1 + r), n))) / ((12 * (pow((1 + r), n) - 1))));
 	cout << "m = " << m << endl;*/
-
-	p = ((12 * m - 1) / s) * 100;
+	do {
+		r = p / 100;
+		m0 = ((s * r * (pow((1 + r), n))) / ((12 * (pow((1 + r), n) - 1))));
+		p = p + 0.00001;
+		/*cout << m0 << endl;*/
+	} while (m0 < m);
 	if (p > 100) {
 		cout << "Error" << endl;
-		exit(0);
 	}
-	cout << "percent = " << p << endl;
+	else {
+		cout << "procent = " << p << "%" << endl;
+	}
 }
