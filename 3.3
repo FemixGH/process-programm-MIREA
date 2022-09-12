@@ -1,0 +1,33 @@
+#include <iostream>
+#include <cmath> 
+#include <math.h>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	string text;
+	ofstream out;
+	out.open("file.txt");
+	if (out.is_open()) {
+		cout << "Enter some message" << endl;
+		cin >> text;
+		out << text << endl;
+
+	}
+	string line;
+	cout << "отображение содержимого файла" << endl;
+	ifstream in("file.txt");
+	if (in.is_open()) {
+		while (getline(in, line)) {
+			cout << line << endl;
+		}
+		in.close();
+	}
+	return 0;
+
+}
+
