@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+using namespace std;
+
+int main()
+{
+
+	setlocale(0, "");
+
+	int i = 0;
+	int a;
+
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	char mass[100];
+	fstream Fin;
+	Fin.open("file.txt");
+	Fin.getline(mass, 100);
+	Fin.close();
+	cout << "Исходный массив: "<< mass<< endl;
+
+	for (int i = 1; i < sizeof(mass); i++)
+	{
+		for (int r = 0; r < sizeof(mass) - i; r++)
+		{
+			if (mass[r + 1] < mass[r])
+			{
+			
+				int temp = mass[r];
+				mass[r] = mass[r + 1];
+				mass[r + 1] = temp;
+			}
+		}
+	}
+
+	cout<< "Отсортированный массив: ";
+	string line;
+	for (int i = 0; i < sizeof(mass); i++)
+	{
+		line = mass[i];
+		if (line != "М") {
+			cout << mass[i];
+		}
+	}
+	cout << endl;
+
+
+
+	return 0;
+}
