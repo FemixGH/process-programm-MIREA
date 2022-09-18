@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+using namespace std;
+
+int main()
+{
+
+	setlocale(0, "");
+
+	int i = 0;
+	int a;
+
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	char mass[100];
+	fstream Fin;
+	Fin.open("file.txt");
+	Fin.getline(mass, 100);
+	Fin.close();
+	cout << "Исходный массив: "<< mass<< endl;
+
+
+	
+	for (int i = 0; i < sizeof(mass); i++)
+	{
+		if (isdigit(mass[i])) {
+			cout << mass[i];
+		}
+	}
+	cout << endl;
+
+
+
+	return 0;
+}
