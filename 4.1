@@ -1,0 +1,52 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+
+
+using namespace std;
+
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	
+
+	cout << "Введите 10 чисел, которые хотите записать в файл" << endl;
+	
+	char mass[10];
+	double qwe;
+
+	ofstream fout("cppstudio.txt"); // создаём объект класса ofstream для записи и связываем его с файлом cppstudio.txt
+
+	for (int i = 0; i < 10; i++)
+	{
+		cin >> qwe;
+		fout << qwe << endl;
+	}
+	fout.close();
+
+
+
+	//fout.close(); // закрываем файл
+	/*system("pause");
+	return 0;*/
+	ifstream fin("cppstudio.txt"); // открыли файл для чтения
+
+	if (fin.is_open())
+	{
+		double a, sum = 0.0;
+
+		while (fin >> a)
+		{
+			sum += a;
+		}
+		cout << "sum=" << sum << "\n";
+	}
+	else cout << "Unable to open file\n";
+
+
+	
+
+}
