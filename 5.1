@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+
+
+using namespace std;
+
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+
+	int a, b;
+	int a1, b1;
+	
+	cout << "Введите а = ";
+	cin >> a;
+	cout << "Введите b = ";
+	cin >> b;
+	a1 = a;
+	b1 = b;
+	cout << endl;
+	while (a != 0 && b != 0) {
+		if (a > b) {
+			a = a % b;
+		}
+		else {
+			b = b % a;
+		}
+	}
+	
+
+	while (a1 != b1) {
+		if (a1 > b1) {
+			a1 = a1 - b1;
+		}
+		else {
+			b1 = b1 - a1;
+		}
+
+	}
+	cout << "делением = " << a + b << endl;
+	cout << "Вычитание = " << a1 << endl;
+}
