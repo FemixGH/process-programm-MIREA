@@ -1,0 +1,47 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+bool swithing(int* trashcan, int n)
+
+
+{
+    for (int i = 0; i < n; ++i)
+    {
+        if (trashcan[i] == i)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+long double fact(int N)
+{
+    if (N < 0) { // если пользователь ввел отрицательное число
+        return 0;
+    }// возвращаем ноль
+    if (N == 0) { // если пользователь ввел ноль,
+        return 1;
+    }// возвращаем факториал от нуля 
+    else { // Во всех остальных случаях
+        return N * fact(N - 1); // делаем рекурсию.
+    }
+}
+
+int main()
+{
+    cout << "Enter your number:   ";
+    int ans = 0, n;
+    cin >> n;
+    cout << endl;
+    long double fac = fact(n);
+    int trashcan[22] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,12,13,14,15,16,17,18,19,20 };
+    for (int i = 0; i < fac; ++i)
+    {
+        next_permutation(trashcan, trashcan + n);
+        if (swithing(trashcan, n))
+            ans++;
+    }
+    cout << "Your answer is =  "<< ans << endl;
+
+    return 0;
+}
