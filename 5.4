@@ -1,0 +1,30 @@
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+#include <cmath> 
+using namespace std;
+
+int main()
+{
+	setlocale(0, "");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	
+	float n, y = 0, count;
+	cout << "Введите ваше число   ";
+	cin >> n;
+	cout << endl;
+
+	count = n;
+	for (int i = 1; i <= n; i++) {
+		float sum = 0;
+		for (int j = 1; j <= i; j++) {
+			sum = sum + sin(j);
+		}
+		y += (i / sum);
+
+	}
+	cout << y;
+	return 0;
+}
