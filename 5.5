@@ -1,0 +1,68 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <Windows.h>
+#include <string>
+#include <stdio.h>
+#include <locale.h>
+
+using namespace std;
+void readfromfile(FILE* f);
+void printtoy(char c);
+struct protoy
+{
+    char n[100];
+    int price;
+    int ages;
+}
+toy[1000];
+
+int max_price = 0;
+int max_number;//номер игрушки с найбольшей ценой
+int i = 0;//число записаных игрушек
+
+int main()
+{
+
+    setlocale(LC_ALL, "Russian");
+
+    FILE* f;
+    char c;
+    if ((f = fopen("uga.txt", "rt")) == NULL)
+        printf("FILE NOT OPEN!\n");
+    
+
+    readfromfile(f);
+    
+    printf("Введите цифру:   ");
+    scanf("%c", &c);
+    printtoy(c);
+	return 0;
+}
+void readfromfile(FILE* f)
+{
+    while (!feof(f))
+    {
+        fscanf(f, "%*c%[^\"]%*c", &toy[i].n);
+        fscanf(f, "%d", &toy[i].price);
+        if (toy[i].price > max_price) { max_price = toy[i].price; max_number = i; } 
+        fscanf(f, "%d", &toy[i].ages);
+        fscanf(f, "%*[^\n]%*c");
+        i++;
+    }
+}
+
+void printtoy(char c)
+{
+    for (int j = 0; j < i; j++)
+    {
+        if ((c == '1' && toy[j].price <= 400 && toy[j].ages <= 8) || (c == '2' && max_price - toy[j].price <= 99) || (c == '3' && toy[j].ages >= 4 && toy[j].ages <= 10))
+        {
+            printf("%-25s", toy[j].n);
+            printf("%5d", toy[j].price);
+            printf("%5d+\n", toy[j].ages);
+        }
+
+    }
+}
