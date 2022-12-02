@@ -1,4 +1,3 @@
-//
 #include <iostream>
 #include <fstream>
 
@@ -10,55 +9,55 @@ int  teachers[600] = { 0 }, students[600][3] = { 0 };
 
 int main() {
 	int i, task, monk, first, second, third;
-	
+
 	setlocale(LC_ALL, "Russian");
-	cout << "Задание «Монахи»\n\n";
+	/*cout << "Задание «Монахи»\n\n";*/
 	cout << "  Задача 1) по номеру монаха узнать, был ли такой монах и если был, то кто были его учитель, учитель его учителя и т.д. до самого Святого Павла;\n";
 	cout << "  Задача 2) по двум монашеским номерам найти их общего ближайшего учителя.\n\n";
 
 	//                          Ручной ввод исходных данных
-	cout << "Введите исходные данные о монахах через пробел (номер монаха, номер 1-го ученика, номер 2-го ученика, номер 3-го ученика)\n\n";
-	do 
-		{
-			cin >> monk;
-			if (monk == 0) break;
-			cin >> first;
-			cin >> second;
-			cin >> third;
-			students[monk][0] = first;
-			students[monk][1] = second;
-			students[monk][2] = third;
-			teachers[first] = monk;
-			teachers[second] = monk;
-			teachers[third] = monk;
-	} while (monk > 0);
-	//cout << input << endl;
-	monk = getIntNumber();
-	first = getIntNumber();
-	second = getIntNumber();
-	third = getIntNumber();
-
-										// Ввод исходных данных из файла monk.txt
-	//ifstream in;										// поток для чтения
-	//in.open("monk.txt", ios::in);						// открытие файла для чтения
-	//for (i = 0; i < 6; i++)
+	//cout << "Введите исходные данные о монахах через пробел (номер монаха, номер 1-го ученика, номер 2-го ученика, номер 3-го ученика)\n\n";
+	//do
 	//{
-	//	in >> monk >> first >> second >> third;
+	//	cin >> monk;
+	//	if (monk == 0) break;
+	//	cin >> first;
+	//	cin >> second;
+	//	cin >> third;
 	//	students[monk][0] = first;
 	//	students[monk][1] = second;
 	//	students[monk][2] = third;
 	//	teachers[first] = monk;
 	//	teachers[second] = monk;
 	//	teachers[third] = monk;
-	//}
-	//in.close();
+	//} while (monk > 0);
+	////cout << input << endl;
+	//monk = getIntNumber();
+	//first = getIntNumber();
+	//second = getIntNumber();
+	//third = getIntNumber();
 
-	cout << "Введите номер задачи ";
+	// Ввод исходных данных из файла monk.txt
+ifstream in;										// поток для чтения
+in.open("monk.txt", ios::in);						// открытие файла для чтения
+for (i = 0; i < 6; i++)
+{
+	in >> monk >> first >> second >> third;
+	students[monk][0] = first;
+	students[monk][1] = second;
+	students[monk][2] = third;
+	teachers[first] = monk;
+	teachers[second] = monk;
+	teachers[third] = monk;
+}
+in.close();
+
+	cout << "Введите номер задачи:  ";
 	task = getIntNumber();
 	switch (task)
 	{
 	case 1:
-		cout << "\nВведите номер монаха ";
+		cout << "\nВведите номер монаха:  ";
 		monk = getIntNumber();
 		if (teachers[monk] == 0)
 		{
@@ -72,7 +71,7 @@ int main() {
 		cout << endl;
 		break;
 	case 2:
-		cout << "\nВведите номера двух монахов через пробел ";
+		cout << "\nВведите номера двух монахов через пробел:  ";
 		cin >> first;
 		cin >> second;
 		if (teachers[first] == 0)
@@ -95,7 +94,7 @@ int main() {
 			}
 		}
 		break;
-    	default:
+	default:
 		cout << endl << task << " неверный номер задачи\n\n";
 		break;
 	}
