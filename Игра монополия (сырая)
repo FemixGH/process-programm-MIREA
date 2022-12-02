@@ -1,284 +1,561 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-#include <string>
-#include<ctime>
-
-#include<ctime>
+#include<iostream>
+#include <conio.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<process.h>
+#include<time.h>
+#include<fstream>
 
 using namespace std;
 
-int monopoli[60][2];
-char player1[50], player2[50];
-int X, Y;
-
-
-int Player1_Pos = 1;
-int Player2_Pos = 1;
-
-
-void init() {
-    
-    int i, j;
-    for (i = 0; i < 40; i++)
-        for (j = 0; j < 40; j++)
-            monopoli[i][j] = 0;
-}
-
-string P(int i, int j) {
-   
-    if (j == 0)
-        if (monopoli[i][j] == 1)
-            return "X";
-        else
-            return " ";
-    else if (j == 1)
-        if (monopoli[i][j] == 1)
-            return "Y";
-        else
-            return " ";
-    else
-        return " ";
-}
-
-
-
-struct Nod
+int A = 0, B = 0, C = 0, c = 1000, a = 1000, b = 1000, x, p;
+char ch = 'Y';
+char name1[25];
+char name2[25];
+char name3[25];
+int pos[20] = { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+int price[20] = { 0,130,70,250,240,230,120,110,230,220,260,120,110,320,230,240,100,90,300,210 };
+int rent[20] = { 0,13,7,25,24,23,12,11,23,22,26,12,11,32,23,24,10,10,30,21 };
+char place[20][20] = { "start","Trivandrum","Agarthala","Railways","Delhi","Mumbai","Gurgon","Ranchi","Waterways","Kolkata","Chennai","Mangalore","Nagpur","Airways","Chandigarh","Goa","Raipur","Patna","Banglore","Hyderabad" };
+void board()
 {
-    
-    int pozitie;
-    Nod* next, * befor;
-};
-
-
-typedef struct DLCircularList
-{
-    
-    struct Nod* first, * last;
-
-
-} DLCircularList;
-
-
-void inserareInceputulListei(DLCircularList* l, int val)
-{
-   
-    Nod* tmp;
-    tmp = (Nod*)malloc(sizeof(Nod));
-    tmp->pozitie = val;
-    if (l->first != NULL) {
-        tmp->next = l->first->next;
-        tmp->befor = l->first->befor;
-    }
-    else {
-        l->first = tmp;
-        l->last = tmp;
-    }
-
-    l->first->next = l->last;
-    l->first->befor = tmp;
-    l->first = tmp;
-
-
-}
-
-void AfisareLista(DLCircularList l)
-{
-    setlocale(LC_ALL, "Russian");
-    Nod* temp = l.first;
-
-    cout << temp->pozitie << endl;
-    temp = temp->next;
-
-    while (temp != l.first)//как долго temp не равен Null или как долго он не достигает конца списка
+    for (int i = 0; i <= 70; i++)
     {
-        cout << temp->pozitie << endl;
-        temp = temp->next;
+         cout << "_";
     }
-}
+     cout << '\n' << "|    START  |   TRIVANDRUM   |   AGARTHALA  |    RAILWAYS   |   DELHI  |";
+     cout << '\n' << "|____0______|_______1________|_______2______|_______3_______|____4_____|";
+     cout << '\n' << "| HYDERABAD |                                               |   MUMBAI |";
+     cout << '\n' << "|____19_____|                                               |_____5____|";
+     cout << '\n' << "| BANGLORE  |                                               |   GURGON |";
+     cout << '\n' << "|____18_____|                                               |_____6____|";
+     cout << '\n' << "|  PATNA    |                                               |   RANCHI |";
+     cout << '\n' << "|____17_____|                                               |_____7____|";
+     cout << '\n' << "|   RAIPUR  |                                               | WATERWAYS|";
+     cout << '\n' << "|____16_____|                                               |_____8____|";
+     cout << '\n' << "|   GOA     |                                               | KOLKATA  |";
+     cout << '\n' << "|____15_____|_______________________________________________|_____9____|";
+     cout << '\n' << "|CHANDIGARH |    AIRWAYS     |    NAGPUR    |    MANGLORE   |  CHENNAI |";
+     cout << '\n' << "|____14_____|______13________|______12______|_______11______|____10____|" << '\n';
 
-void inserareSfarsitulListei(DLCircularList* l, int val)
+}
+void display()
 {
-    Nod* sfarsit = new Nod;
-    sfarsit->pozitie = val;
-
-    if (l->first == NULL)
-        inserareInceputulListei(l, val);
-    else {
-        sfarsit->next = l->first;
-        sfarsit->befor = l->last;
-        l->last->next = sfarsit;
-        l->last = sfarsit;
-    }
-
+    board();
+     cout << '\n' << "PLAYER 1 AT POSITION :" << A << "   MONEY IN HAND : " << a << '\n';
+     cout << "PLAYER 2 AT POSITION :" << B << "   MONEY IN HAND : " << b << '\n' << '\n';
+     ofstream pos;
+    pos.open("pos_mon_2_player.txt");
+    pos << A << '\n' << a << '\n' << B << '\n' << b;
+    pos.close();
 }
-Nod* CautarePozitie(DLCircularList l, int pozitie)
+void display1()
 {
-    setlocale(LC_ALL, "Russian");
-    Nod* temp = l.first;
-    while (temp->pozitie != pozitie) {
-        temp = temp->next;
-        if (temp == l.first)
-            return NULL;
-    }
-    return temp;
+    board();
+     cout << '\n' << "PLAYER 1 AT POSITION :" << A << "   MONEY IN HAND : " << a << '\n';
+     cout << "PLAYER 2 AT POSITION :" << B << "   MONEY IN HAND : " << b << '\n';
+     cout << "PLAYER 3 AT POSITION :" << C << "   MONEY IN HAND : " << c << '\n' << '\n';
+     ofstream pos;
+    pos.open("pos_mon_3_player.txt");
+    pos << A << '\n' << a << '\n' << B << '\n' << b << '\n' << C << '\n' << c;
+    pos.close();
 }
-
-
-DLCircularList* initList() {
-    setlocale(LC_ALL, "Russian");
-    DLCircularList* l = new DLCircularList;
-    l->first = NULL;
-    l->last = NULL;
-    return 0;
-    
+void rules()
+{
+    system("cls");
+     cout << '\t' << '\t' << "WELCOME TO MONOPOLY" << '\n' << '\n';
+     cout << "   RULES" << '\n';
+     cout << '\n' << "1.This is a multiplayer game(2 or 3 players)" << '\n' << '\n' << "2.The is  dice rolled at random at each players chance" << '\n' << '\n';
+     cout << "3.You can buy places at which you land" << '\n' << '\n';
+     cout << "4.You will first be given $1000.Each time a player crosses START the player will be given $100" << '\n' << '\n';
+     cout << "5.If a place is already owned by the other PLAYER you will have to pay a rent" << '\n' << '\n';
+     cout << "6.After each round you can exit the game or continue the game" << '\n' << '\n';
+     cout << "7.The GAME comes to an END when one of the players are BANKRUPT or UNABLE to pay the RENT" << '\n' << '\n';
+     cout << "8.In case of THREE PLAYERS GAME if a PLAYER is BANKRUPT that PLAYER is out of the game.The other TWO PLAYERS can continue the game." << '\n' << '\n';
+     cout << "9.The Properties of the PLAYER whose is out can be bought by the other two PLAYERS";
+    _getch();
 }
-
-
-
-void Afisare() {
-    setlocale(LC_ALL, "Russian");
-    cout << "  ----------------------------------------------------------------------------" << endl;
-    cout << "  ||||||  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 ||||||" << endl;
-    cout << "  |---------------------------------------------------------------------------|" << endl;
-    cout << "  | 1  | " << P(1, 0) << " " << P(1, 1) << " | " << P(2, 0) << " " << P(2, 1) << " | " << P(3, 0) << " " << P(3, 1) << " | " << P(4, 0) << " " << P(4, 1) << " | " << P(5, 0) << " " << P(5, 1) << " | " << P(6, 0) << " " << P(6, 1) << " | " << P(7, 0) << " " << P(7, 1) << " | " << P(8, 0) << " " << P(8, 1) << " | " << P(9, 0) << " " << P(9, 1) << " | " << P(10, 0) << " " << P(10, 1) << " | " << P(11, 0) << " " << P(11, 1) << " | 11 |" << endl;
-    cout << "  |----------------------------------------------------------------------|----|" << endl;
-    cout << "  | 40 | " << P(40, 0) << " " << P(40, 1) << " |     __________                                      | " << P(12, 0) << " " << P(12, 1) << " | 12 |" << endl;
-    cout << "  |----|-----|    |   Карты  |                                     |-----|----|" << endl;
-    cout << "  | 39 | " << P(39, 0) << "  " << P(39, 1) << "|    |   Удачи  |                                     | " << P(13, 0) << " " << P(13, 1) << " | 13 |" << endl;
-    cout << "  |----|-----|    |__________|                                     |-----|----|" << endl;
-    cout << "  | 38 | " << P(38, 0) << " " << P(38, 1) << " |                                                     | " << P(14, 0) << " " << P(14, 1) << " | 14 |" << endl;
-    cout << "  |----|-----|                                                     |-----|----|" << endl;
-    cout << "  | 37 | " << P(37, 0) << " " << P(37, 1) << " |                                                     | " << P(15, 0) << " " << P(15, 1) << " | 15 |" << endl;
-    cout << "  |----|-----|                      MONOPOLY                       |-----|----|" << endl;
-    cout << "  | 36 | " << P(36, 0) << " " << P(36, 1) << " |                                                     | " << P(16, 0) << " " << P(16, 1) << " | 16 |" << endl;
-    cout << "  |----|-----|                                                     |-----|----|" << endl;
-    cout << "  | 35 | " << P(35, 0) << " " << P(35, 1) << " |                                                     | " << P(17, 0) << " " << P(17, 1) << " | 17 |" << endl;
-    cout << "  |----|-----|                                                     |-----|----|" << endl;
-    cout << "  | 34 | " << P(34, 0) << " " << P(34, 1) << " |                                      __________     | " << P(18, 0) << " " << P(18, 1) << " | 18 |" << endl;
-    cout << "  |----|-----|                                     |   Карты  |    |-----|----|" << endl;
-    cout << "  | 33 | " << P(33, 0) << " " << P(33, 1) << " |                                     |   шанса  |    | " << P(19, 0) << " " << P(19, 1) << " | 19 |" << endl;
-    cout << "  |----|-----|                                     |__________|    |-----|----|" << endl;
-    cout << "  | 32 | " << P(32, 0) << " " << P(32, 1) << " |                                                     | " << P(20, 0) << " " << P(20, 1) << " | 20 |" << endl;
-    cout << "  |----------------------------------------------------------------------|----|" << endl;
-    cout << "  | 31 | " << P(31, 0) << " " << P(31, 1) << " | " << P(30, 0) << " " << P(30, 1) << " | " << P(29, 0) << " " << P(29, 1) << " | " << P(28, 0) << " " << P(28, 1) << " | " << P(27, 0) << " " << P(27, 1) << " | " << P(26, 0) << " " << P(26, 1) << " | " << P(25, 0) << " " << P(25, 1) << " | " << P(24, 0) << " " << P(24, 1) << " | " << P(23, 0) << " " << P(23, 1) << " | " << P(22, 0) << " " << P(22, 1) << " | " << P(21, 0) << " " << P(21, 1) << " | 21 |" << endl;
-    cout << "  |---------------------------------------------------------------------------|" << endl;
-    cout << "  |||||| 31  | 30  | 29  | 28  | 27  | 26  | 25  | 24  | 23  | 22  |  21 ||||||" << endl;
-    cout << "  -----------------------------------------------------------------------------" << endl;
-}
-
-int random_nr() {
-    setlocale(LC_ALL, "Russian");
-
-    int x, y, k;
-    cout << "Бросьте кости, чтобы переместить пешку" << "\n";
-
-    //    srand(time(0));
-    for (int i = 0; i < 1; i++) {
-        int count = 0;
-        x = 1 + (rand() % 6);
-        y = 1 + (rand() % 6);
-        cout << " Ты дал: " << x << " а также" << " " << y << "\t";
-        while (x == y && count < 3)
-        {
-            cout << "\nДай еще раз:" << endl;
-            count++;
-            x = 1 + (rand() % 6);
-            y = 1 + (rand() % 6);
-            cout << " Ты дал: " << x << " а также" << " " << y << "\t";
-        }
-
-        cout << endl;
-    }
-
-    if (x == 12) // поменял
+void getname(int n1)
+{
+    if (n1 == 1)
     {
-        cout << "Ты дал:";
-        cout << (rand() % 12) << endl;
-    }
-
-    return x + y;
-}
-
-int main() {
-    init();
-    DLCircularList lc0;
-
-    srand((unsigned)time(0));
-    setlocale(LC_ALL, "Russian");
-
-    int x, y, k;
-
-    cout << "Назовите имя первого игрока 1: ";
-    cin >> player1;
-    cout << "Назовите имя первого игрока 2: ";
-    cin >> player2;
-
-    monopoli[Player1_Pos][0] = 1;
-    monopoli[Player2_Pos][1] = 1;
-
-    char work = 'O';
-    int player1_zar = 0;
-    int player2_zar = 0;
-    int finish = 0;
-
-
-    while (work == 'O' || work == 'o') {
+         ofstream fout;
+        fout.open("name_2player.txt");
         system("cls");
-        cout << " " << player1 << "  Это с X" << endl;
-        cout << " " << player2 << "  Это с Y" << endl;
+         cout << "ENTER PLAYER 1'S NAME:";
+         cin >> name1;
+        fout << name1 << '\n';
+         cout << "ENTER PLAYER 2'S NAME:";
+         cin >> name2;
+        fout << name2 << '\n';
+        fout.close();
+    }
+    if (n1 == 2)
+    {
+         ofstream fout;
+        fout.open("name_3player.txt");
+        system("cls");
+         cout << "ENTER PLAYER 1'S NAME:";
+         cin >> name1;
+        fout << name1 << '\n';
+         cout << "ENTER PLAYER 2'S NAME:";
+         cin >> name2;
+        fout << name2 << '\n';
+         cout << "ENTER PLAYER 3'S NAME:";
+         cin >> name3;
+        fout << name3 << '\n';
+        fout.close();
+    }
+}int play()
+{
+    system("cls");
+    char ch = 'y';
+    int l;
+    while (ch == 'Y' || ch == 'y')
+    {
+        system("cls");
+        display();
+        int random;
+        srand(time(NULL));
+        x = (rand() % 6 + 1);
+        if ((A + x) / 20 == 1)
+            a += 100;
+        A = (A + x) % 20;
+        system("cls");
+        display();
+         cout << name1 << "'s chance" << '\n' << '\n';
+         cout << "YOU ROLLED " << x << '\n' << '\n';
+        if (pos[A] == 0)
+        {
 
-        Afisare();
-
-
-
-        player1_zar = random_nr();
-        cout << " " << player1 << " шаг " << player1_zar << " коробка" << endl;
-
-        player2_zar = random_nr();
-        cout << " " << player2 << " шаг " << player2_zar << " коробка" << endl;
-
-        monopoli[Player1_Pos][0] = 0;
-        monopoli[Player2_Pos][1] = 0;
-
-        Player1_Pos = (Player1_Pos + player1_zar) % 40;
-        if (Player1_Pos == 0)
-            Player1_Pos = 40;
-
-
-        Player2_Pos = (Player2_Pos + player2_zar) % 40;
-        if (Player2_Pos == 0)
-            Player2_Pos = 40;
-
-        if (Player1_Pos >= 40) {
-            Player1_Pos = 40;
-            finish = 1;
+             cout << "DO YOU WANT TO BUY : " << place[A] << " for Price $  " << price[A] << '\n' << '\n';
+             cout << " Y---->TO BUY      N----->TO NOT BUY" << '\n';
+             cin >> ch;
+            if (ch == 'Y' || ch == 'y')
+            {
+                if (a >= price[A])
+                {
+                    pos[A] = 1;
+                    a -= price[A];
+                }
+                else
+                {
+                     cout << "NO ENOUGH MONEY" << '\n' << '\n';
+                    _getch();
+                }
+            }
         }
-        if (Player2_Pos >= 40) {
-            Player2_Pos = 40;
-            finish = 2;
-        }
-        if (Player1_Pos >= 40 && Player2_Pos >= 40) {
-            Player1_Pos = 40;
-            Player2_Pos = 40;
-            finish = 3;
+        else if (pos[A] == 2)
+        {
+            if (a >= rent[A])
+            {
+                 cout << "YOU HAVE COME TO " << name2 << "'s POSITION :" << place[A] << '\n' << '\n';
+                 cout << "PAY RENT : $ " << rent[A] << '\n' << '\n';
+                a -= rent[A];
+                b += rent[A];
+                _getch();
+            }
+            else
+            {
+                 cout << "NO MONEY TO PAY RENT " << '\n' << '\n' << "YOU ARE BANKRUPT" << '\n' << '\n';
+                _getch();
+                 cout << "GAME OVER :" << name2 << " WINS !!!!" << '\n';
+                _getch();
+                system("cls");
+                 cout << "THANK YOU";
+                exit(1);
+            }
+        }int play2()
+{
+    system("cls");
+    char ch = 'y';
+    int q = 0;
+    while (ch == 'Y' || ch == 'y')
+    {
+        system("cls");
+        display1();
+        int random;
+        srand(time(NULL));
+        x = (rand() % 6 + 1);
+        if ((A + x) / 20 == 1)
+            a += 100;
+        A = (A + x) % 20;
+        system("cls");
+        display1();
+         cout << name1 << "'s chance" << '\n' << '\n';
+         cout << "YOU ROLLED " << x << '\n' << '\n';
+        if (pos[A] == 0)
+        {
 
+             cout << "DO YOU WANT TO BUY : " << place[A] << " for Price $  " << price[A] << '\n' << '\n';
+             cout << " Y---->TO BUY      N----->TO NOT BUY" << '\n';
+             cin >> ch;
+            if (ch == 'Y' || ch == 'y')
+            {
+                if (a >= price[A])
+                {
+                    pos[A] = 1;
+                    a -= price[A];
+                }
+                else
+                {
+                     cout << "NO ENOUGH MONEY" << '\n' << '\n';
+                    _getch();
+                }
+            }
         }
-        setlocale(LC_ALL, "Russian");
-        monopoli[Player1_Pos][0] = 1;
-        monopoli[Player2_Pos][1] = 1;
-        if (finish == 0) {
-            do {
-                cout << "Press 'O' for continue or 'X' for exit: ";
-                cin >> work;
-            } while (work != 'O' && work != 'X' && work != 'o' && work != 'x');
+        else if (pos[A] == 2)
+        {
+            if (a >= rent[A])
+            {
+                 cout << "YOU HAVE COME TO " << name2 << "'s POSITION :" << place[A] << '\n' << '\n';
+                 cout << "PAY RENT : $ " << rent[A] << '\n' << '\n';
+                a -= rent[A];
+                b += rent[A];
+                _getch();
+            }
+            else
+            {
+                 cout << "NO MONEY TO PAY RENT " << '\n' << '\n' << "YOU ARE BANKRUPT" << '\n' << '\n';
+                _getch();
+                 cout << "You ARE OUT..." << '\n';
+                _getch();
+                system("cls");
+                 cout << name2 << "&" << name3 << "CAN CONTINUE THE GAME";
+                _getch();
+                for (q = 0; q < 20; q++)
+                {
+                    name1[q] = name2[q];
+                    name2[q] = name3[q];
+                }
+                A = B;
+                B = C;
+                a = b;
+                b = c;
+                for (q = 0; q < 20; q++)
+                {
+                    if (pos[q] == 1)
+                    {
+                        pos[q] = 0;
+                    }
+                }
+                play();
+
+            }
+        }else if (pos[B] == 3)
+        {
+            if (b >= rent[B])
+            {
+                 cout << "YOU HAVE COME TO " << name3 << "'s POSITION :" << place[B] << '\n' << '\n';
+                 cout << "PAY RENT : $ " << rent[B] << '\n' << '\n';
+                b -= rent[B];
+                c += rent[B];
+                _getch();
+            }
+            else
+            {
+                 cout << "NO MONEY TO PAY RENT " << '\n' << '\n' << "YOU ARE BANKRUPT" << '\n' << '\n';
+                _getch();
+                 cout << "You ARE OUT..." << '\n';
+                _getch();
+                system("cls");
+                 cout << name1 << "&" << name3 << "CAN CONTINUE THE GAME";
+                _getch();
+                for (q = 0; q < 20; q++)
+                {
+                    name2[q] = name3[q];
+                }
+                B = C;
+                b = c;
+                for (q = 0; q < 20; q++)
+                {
+                    if (pos[q] == 2)
+                    {
+                        pos[q] = 0;
+                    }
+                }
+                play();
+
+            }
         }
-        else {
-            work = 'x';
+        else if (pos[B] == 4)
+        {
+             cout << "YOU HAVE COME TO START" << '\n' << '\n';
+            _getch();
         }
+        else
+        {
+             cout << "YOU HAVE COME TO YOUR PLACE : " << place[B] << '\n' << '\n';
+            _getch();
+        }
+
+        system("cls");
+        srand(time(NULL));
+        x = (rand() % 6 + 1);
+        if ((C + x) / 20 == 1)
+            c += 100;
+        C = (C + x) % 20;
+        display1();
+         cout << name3 << "'s chance" << '\n' << '\n';
+         cout << "YOU ROLLED " << x << '\n' << '\n';
+        if (pos[C] == 0)
+        {
+
+             cout << "DO YOU WANT TO BUY : " << place[C] << "   for PRICE : $ " << price[C] << '\n' << '\n';
+             cout << " Y---->TO BUY      N----->TO NOT BUY" << '\n' << '\n';
+             cin >> ch;
+            if (ch == 'Y' || ch == 'y')
+            {
+                if (c >= price[C])
+                {
+                    pos[C] = 2;
+                    c -= price[C];
+                }
+                else
+                {
+                     cout << "NO ENOUGH MONEY" << '\n' << '\n';
+                    _getch();
+                }
+            }
+        }
+else if (pos[C] == 2)
+        {
+            if (c >= rent[C])
+            {
+                 cout << "YOU HAVE COME TO " << name2 << "'s POSITION :" << place[C] << '\n' << '\n';
+                 cout << "PAY RENT : $ " << rent[C] << '\n' << '\n';
+                c -= rent[C];
+                b += rent[C];
+                _getch();
+            }
+            else
+            {
+                 cout << "NO MONEY TO PAY RENT " << '\n' << '\n' << "YOU ARE BANKRUPT" << '\n' << '\n';
+                _getch();
+                 cout << "You ARE OUT..." << '\n';
+                _getch();
+                system("cls");
+                 cout << name1 << "&" << name2 << "CAN CONTINUE THE GAME";
+                _getch();
+                for (q = 0; q < 20; q++)
+                {
+                    if (pos[q] == 3)
+                    {
+                        pos[q] = 0;
+                    }
+                }
+                play();
+    
+            }
+        }
+        else if (pos[C] == 1)
+        {
+            if (c >= rent[C])
+            {
+                 cout << "YOU HAVE COME TO " << name1 << "'s POSITION :" << place[C] << '\n' << '\n';
+                 cout << "PAY RENT : $ " << rent[C] << '\n' << '\n';
+                c -= rent[C];
+                a += rent[C];
+                _getch();
+            }
+            else
+            {
+                 cout << "NO MONEY TO PAY RENT " << '\n' << '\n' << "YOU ARE BANKRUPT" << '\n' << '\n';
+                _getch();
+                 cout << "You ARE OUT..." << '\n';
+                _getch();
+                system("cls");
+                 cout << name1 << "&" << name2 << "CAN CONTINUE THE GAME";
+                _getch();
+                for (q = 0; q < 20; q++)
+                {
+                    if (pos[q] == 3)
+                    {
+                        pos[q] = 0;
+                    }
+                }
+                play();
+
+            }
+        }
+        else if (pos[B] == 4)
+        {
+             cout << "YOU HAVE COME TO START" << '\n' << '\n';
+            _getch();
+        }
+        else
+        {
+             cout << "YOU HAVE COME TO YOUR PLACE : " << place[B] << '\n' << '\n';
+            _getch();
+        }
+        int g;
+         ofstream plac;
+        plac.open("places_3_player.txt");
+        for (g = 0; g < 20; g++)
+        {
+            plac << pos[g] << '\n';
+        }
+        plac.close();
+         cout << "DO YOU WANT TO CONTINUE " << '\n' << '\n';
+         cout << "Y----->YES         N----->NO" << '\n';
+         cin >> ch;
     }
 
+    _getch();
+    return 1;
+}
+int menu()
+{
+    system("cls");
+    int p1 = 0, n;
+    while (p1 == 0)
+    {
+         cout << '\t' << "      MENU" << '\n';
+         cout << "1.CONTINUE" << '\n';
+         cout << "2.NEW GAME" << '\n';
+         cout << "3.RULES" << '\n';
+         cout << "4.EXIT" << '\n';
+        int c;
+         cin >> c;
+        int f = 1;
+        if (c == 1)
+        {
+            p1 = 1;
+            f = 1;
+            while (f == 1)
+            {
+                int r;
+                system("cls");
+                 cout << "1. 2 PLAYER GAME" << '\n';
+                 cout << "2. 3 PLAYER GAME" << '\n';
+                 cin >> n;
+                switch (n)
+                {
+                case 1: {f = 0;
+                     ifstream fin;
+                    fin.open("pos_mon_2_player.txt");
+                    for (r = 0; r < 2; r++)
+                    {
+                        fin >> A >> a >> B >> b;
+                    }
+                    fin.close();
+                     ifstream posi;
+                    posi.open("places_2_player.txt");
+                    for (r = 0; r < 20; r++)
+                    {
+                        posi >> pos[r];
+                    }
+                    posi.close();
+                     ifstream nam2;
+                    nam2.open("name_2player.txt");
+                    for (r = 0; r < 1; r++)
+                    {
+                        nam2 >> name1 >> name2;
+                    }  nam2.close();
+                    play();
+                    break; }
+                case 2: {f = 0;
+                     ifstream fi1;
+                    fi1.open("pos_mon_3_player.txt");
+                    for (r = 0; r < 2; r++)
+                    {
+                        fi1 >> A >> a >> B >> b >> C >> c;
+                    }
+                    fi1.close();
+                     ifstream po1;
+                    po1.open("places_3_player.txt");
+                    for (r = 0; r < 20; r++)
+                    {
+                        po1 >> pos[r];
+                    }
+                    po1.close();
+                     ifstream na1;
+                    na1.open("name_3player.txt");
+                    for (r = 0; r < 1; r++)
+                    {
+                        na1 >> name1 >> name2 >> name3;
+                    }
+                    na1.close();
+                    play2();
+                    break; }
+                default:system("cls");
+                     cout << "ENTER PROPER CODE";
+                    _getch();
+                    system("cls");
+                }
+            }
+        }
+        else if (c == 2)
+        {
+            p1 = 1;
+            f = 1;
+            while (f == 1)
+            {
+                system("cls");
+                 cout << "1. 2 PLAYER GAME" << '\n';
+                 cout << "2. 3 PLAYER GAME" << '\n';
+                 cin >> n;
+                switch (n)
+                {
+                case 1: f = 0;
+                    getname(n);
+                    play();
 
-    return 0;
+                    break;
+                case 2:getname(n);
+                    play2();
+                    f = 0;
+                    break;
+                default:system("cls");
+                     cout << "ENTER PROPER CODE";
+                    _getch();
+                    system("cls");
+                }
+            }
+        }
+        else if (c == 3)
+        {
+            p1 = 1;
+            rules();
+            int f1 = 1;
+            while (f1 == 1)
+            {
+                system("cls");
+                 cout << "1.BACK" << '\n';
+                 cout << "2.EXIT" << '\n';
+                int c1;
+                 cin >> c1;
+                system("cls");
+                switch (c1)
+                {
+                case 1: f1 = 0;
+                    menu();
+                    break;
+                case 2:f1 = 0;
+                    return(0);
+                    break;
+                default: cout << "ENTER PROPER CODE";
+                    _getch();
+
+                }
+            }
+        }
+        else if (c == 4)
+        {
+            p1 = 1;
+            return(0);
+        }
+        else
+        {
+            system("cls");
+             cout << "ENTER PROPER CODE";
+            _getch();
+            system("cls");
+        }
+    }
+}
+int main()
+{
+    menu();
 
 }
-
