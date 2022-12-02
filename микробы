@@ -11,6 +11,7 @@ int outprint;
 
 int main()
 {
+	setlocale(LC_ALL, "Russian");
 	ofstream out;														// поток для записи
 	ifstream in;														// поток для чтения
 	string textout;
@@ -90,7 +91,7 @@ int main()
 	int out1 = outputondisplay();
 	if (out1 == 0) {
 		system("pause");
-		task6();
+		
 	}
 
 	for (k = 1; k < generation; k++)
@@ -154,11 +155,11 @@ int main()
 	out.close();
 
 	system("pause");
-	task6();
+	
 }
-
 int neighbors(int i, int j)						// Функция подсчета количества соседей
 {
+
 	int n = 0, event;
 	if (i == 0)									// Определяем местоположение микроба
 	{
@@ -217,71 +218,7 @@ int neighbors(int i, int j)						// Функция подсчета количе
 			}
 		}
 	}
-switch (event)
-	{
-	case 1:										// Левый верхний угол
-		if (now[0][1] > 0) { n++; }
-		if (now[1][1] > 0) { n++; }
-		if (now[1][0] > 0) { n++; }
-		break;
-	case 2:										// Правый верхний угол
-		if (now[0][19] > 0) { n++; }
-		if (now[1][19] > 0) { n++; }
-		if (now[1][20] > 0) { n++; }
-		break;
-	case 3:										// Самый верхний ряд
-		if (now[0][j - 1] > 0) { n++; }
-		if (now[1][j - 1] > 0) { n++; }
-		if (now[1][j] > 0) { n++; }
-		if (now[1][j + 1] > 0) { n++; }
-		if (now[0][j + 1] > 0) { n++; }
-		break;
-	case 4:										// Левый нижний угол
-		if (now[19][0] > 0) { n++; }
-		if (now[19][1] > 0) { n++; }
-		if (now[20][1] > 0) { n++; }
-		break;
-	case 5:										// Правый нижний угол
-		if (now[19][19] > 0) { n++; }
-		if (now[19][20] > 0) { n++; }
-		if (now[20][19] > 0) { n++; }
-		break;
-	case 6:										// Самый нижний ряд
-		if (now[20][j - 1] > 0) { n++; }
-		if (now[19][j - 1] > 0) { n++; }
-		if (now[19][j] > 0) { n++; }
-		if (now[19][j + 1] > 0) { n++; }
-		if (now[20][j + 1] > 0) { n++; }
-		break;
-	case 7:										// Самый левый ряд
-		if (now[i - 1][0] > 0) { n++; }
-		if (now[i - 1][1] > 0) { n++; }
-		if (now[i][1] > 0) { n++; }
-		if (now[i + 1][1] > 0) { n++; }
-		if (now[i + 1][0] > 0) { n++; }
-		break;
-	case 8:										// Самый правый ряд
-		if (now[i - 1][20] > 0) { n++; }
-		if (now[i - 1][19] > 0) { n++; }
-		if (now[i][19] > 0) { n++; }
-		if (now[i + 1][19] > 0) { n++; }
-		if (now[i + 1][20] > 0) { n++; }
-		break;
-	case 9:										// Внутренние ячейки
-		if (now[i - 1][j - 1] > 0) { n++; }
-		if (now[i - 1][j] > 0) { n++; }
-		if (now[i - 1][j + 1] > 0) { n++; }
-		if (now[i][j - 1] > 0) { n++; }
-		if (now[i][j + 1] > 0) { n++; }
-		if (now[i + 1][j - 1] > 0) { n++; }
-		if (now[i + 1][j] > 0) { n++; }
-		if (now[i + 1][j + 1] > 0) { n++; }
-		break;
-	}
-	return n;
-}
-int outputondisplay()										// вывод на экран очередного поколения
-{
+	switch (event)setlocale(LC_ALL, "Russian");
 	int i, j, countm;
 	countm = 0;
 	if (outprint == 1)
