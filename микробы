@@ -276,3 +276,51 @@ int getIntNumber()
 	}
 	return number;
 }
+int outputondisplay()										// вывод на экран очередного поколения
+{
+	int i, j, countm;
+	countm = 0;
+	if (outprint ==1) 
+		cout << "-----------------------------------------------------------------" << endl;
+	for (i = 0; i < 21; i++)
+	{
+		if (outprint == 1)
+			cout << "|";
+		for (j = 0; j < 21; j++)
+		{
+			if (future[i][j] == 0)
+			{
+				if (outprint == 1)
+					cout << "   ";
+			}
+			else
+			{
+				countm++;
+				if (future[i][j] > 9)
+				{
+					if (outprint == 1)
+						cout << " " << future[i][j];
+				}
+				else
+				{
+					if (outprint == 1)
+						cout << "  " << future[i][j];
+				}
+			}
+		}
+		if (outprint == 1)
+			cout << "|" << endl;
+	}
+	if (outprint == 1)
+		cout << "-----------------------------------------------------------------" << endl;
+	if (countm == 0)
+	{
+		cout << "Все микробы умерли" << endl;
+
+	}
+	else
+	{
+		cout << "Всего в этом поколении живых микробов - " << countm << endl;
+	}
+	return countm;
+}
