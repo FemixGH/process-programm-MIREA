@@ -12,11 +12,11 @@ int outprint;
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	ofstream out;														// поток для записи
-	ifstream in;														// поток для чтения
+	ofstream out;														
+	ifstream in;														
 	string textout;
 	char ch;
-	int i, j, k, generation, count;
+	int  generation, count;
 
 	system("cls");
 	cout << "Задача «Жизнь»\n\n";
@@ -35,19 +35,19 @@ int main()
 	int number_left = 441;
 	if (vvod == 1) {
 		cout << "Ввод чисел вручную\n\n";
-		out.open("work.dat", ios::out);					// окрытие файла для дозаписи 
+		out.open("work.dat", ios::out);					
 		if (out)
 		{
-			for (i = 0; i < 21; i++)
+			for (int i = 0; i < 21; i++)
 			{
-				for (j = 0; j < 21; j++)
+				for (int j = 0; j < 21; j++)
 				{
 					cout << "Осталось ввести " << number_left << " символов" << endl;
 					number_left--;
 					ch = _getch();
-					out << ch;									// запись в файл содержимого 
+					out << ch;									
 				}
-				out << "\n";									// запись в файл конца строки
+				out << "\n";									
 			}
 			cin.ignore();
 		}
@@ -64,25 +64,25 @@ int main()
 	cout << "Введите количество поколений: ";
 	generation = getIntNumber();
 
-	in.open("work.dat", ios::in);						// окрытие файла для чтения
-	out.open("work.txt", ios::out);						// окрытие файла для дозаписи 
+	in.open("work.dat", ios::in);						
+	out.open("work.txt", ios::out);						
 	cout << "\nПоколение 1" << endl;
-	for (i = 0; i < 21; i++)										// чтение содержимого файла в now[][]
+	for (int i = 0; i < 21; i++)										
 	{
-		for (j = 0; j < 21; j++)
+		for (int j = 0; j < 21; j++)
 		{
 			in >> ch;
-			if (ch == 'h')									// есть микроб
+			if (ch == 'h')									
 			{
 				now[i][j] = 1;
-				future[i][j] = 1;						// сразу записываем	в массив future, чтобы вывести 1-е поколение на экран 
+				future[i][j] = 1;						
 			}
 			else
 			{
 				now[i][j] = 0;
 				future[i][j] = 0;
 			}
-			out << now[i][j];							    // вывод 1-го поколения в файл
+			out << now[i][j];							    
 		}
 	}
 	in.close();
@@ -91,26 +91,25 @@ int main()
 	int out1 = outputondisplay();
 	if (out1 == 0) {
 		system("pause");
-		
-	}
 
-	for (k = 1; k < generation; k++)
+	}
+for (int k = 1; k < generation; k++)
 	{
-		cout << "\nПоколение " << k + 1 << endl;										// вывод настоящего в файл work.out
-		out << "Поколение " << k + 1 << endl;											// вывод настоящего в файл work.out
-		for (i = 0; i < 21; i++)
+		cout << "\nПоколение " << k + 1 << endl;										
+		out << "Поколение " << k + 1 << endl;											
+		for (int i = 0; i < 21; i++)
 		{
-			for (j = 0; j < 21; j++)
+			for (int j = 0; j < 21; j++)
 			{
-				if (now[i][j] > 0)												// здесь есть микроб
+				if (now[i][j] > 0)												
 				{
-					if (now[i][j] == 12)									// микроб умирает
+					if (now[i][j] == 12)									
 					{
 						future[i][j] = 0;
 					}
 					else
 					{
-						count = neighbors(i, j);						// количество соседей
+						count = neighbors(i, j);						
 						if (count == 2 || count == 3)
 						{
 							future[i][j] = ++now[i][j];
@@ -121,30 +120,30 @@ int main()
 						}
 					}
 				}
-				else														// здесь нет микроба
+				else														
 				{
-					count = neighbors(i, j);								// количество соседей
+					count = neighbors(i, j);								
 					if (count == 3)
 					{
-						future[i][j] = 1;								// если соседей 3, то рождается новый микроб
+						future[i][j] = 1;								
 					}
 					else
 					{
 						future[i][j] = 0;
 					}
 				}
-				out << future[i][j];									// вывод настоящего в файл work.out
+				out << future[i][j];									
 			}
-			out << "\n";													// запись в файл конца строки
+			out << "\n";													
 		}
 		int out = outputondisplay();
 		if (out == 0) {
 			break;
 		}
 
-		for (i = 0; i < 21; i++)												// future => now
+		for (int i = 0; i < 21; i++)												
 		{
-			for (j = 0; j < 21; j++)
+			for (int j = 0; j < 21; j++)
 			{
 				now[i][j] = future[i][j];
 			}
@@ -155,25 +154,24 @@ int main()
 	out.close();
 
 	system("pause");
-	
-}
-int neighbors(int i, int j)						// Функция подсчета количества соседей
+
+}int neighbors(int i, int j)						
 {
 
 	int n = 0, event;
-	if (i == 0)									// Определяем местоположение микроба
+	if (i == 0)									
 	{
-		if (j == 0)								// Левый верхний угол
+		if (j == 0)								
 		{
 			event = 1;
 		}
 		else
 		{
-			if (j == 20)						// Правый верхний угол
+			if (j == 20)						
 			{
 				event = 2;
 			}
-			else								// Самый верхний ряд
+			else								
 			{
 				event = 3;
 			}
@@ -183,17 +181,17 @@ int neighbors(int i, int j)						// Функция подсчета количе
 	{
 		if (i == 20)
 		{
-			if (j == 0)						// Левый нижний угол					
+			if (j == 0)											
 			{
 				event = 4;
 			}
 			else
 			{
-				if (j == 20)				// Правый нижний угол
+				if (j == 20)				
 				{
 					event = 5;
 				}
-				else						// Самый нижний ряд
+				else						
 				{
 					event = 6;
 				}
@@ -201,69 +199,25 @@ int neighbors(int i, int j)						// Функция подсчета количе
 		}
 		else
 		{
-			if (j == 0)							// Самый левый ряд
+			if (j == 0)							
 			{
 				event = 7;
 			}
 			else
 			{
-				if (j == 20)				// Самый правый ряд
+				if (j == 20)				
 				{
 					event = 8;
 				}
-				else						// Внутренние ячейки
+				else						
 				{
 					event = 9;
 				}
 			}
 		}
 	}
-	switch (event)setlocale(LC_ALL, "Russian");
-	int i, j, countm;
-	countm = 0;
-	if (outprint == 1)
-		cout << "-----------------------------------------------------------------" << endl;
-	for (i = 0; i < 21; i++)
-	{
-		if (outprint == 1)
-			cout << "|";
-		for (j = 0; j < 21; j++)
-		{
-			if (future[i][j] == 0)
-			{
-				if (outprint == 1)
-					cout << "   ";
-			}
-			else
-			{
-				countm++;
-				if (future[i][j] > 9)
-				{
-					if (outprint == 1)
-						cout << " " << future[i][j];
-				}
-				else
-				{
-					if (outprint == 1)
-						cout << "  " << future[i][j];
-				}
-			}
-		}
-		if (outprint == 1)
-			cout << "|" << endl;
-	}
-	if (outprint == 1)
-		cout << "-----------------------------------------------------------------" << endl;
-	if (countm == 0)
-	{
-		cout << "Все микробы умерли" << endl;
-
-	}
-	else
-	{
-		cout << "Всего в этом поколении живых микробов - " << countm << endl;
-	}
-	return countm;
+	return 1;
+	
 }
 int getIntNumber()
 {
@@ -278,15 +232,15 @@ int getIntNumber()
 }
 int outputondisplay()										// вывод на экран очередного поколения
 {
-	int i, j, countm;
+	int countm;
 	countm = 0;
-	if (outprint ==1) 
+	if (outprint == 1)
 		cout << "-----------------------------------------------------------------" << endl;
-	for (i = 0; i < 21; i++)
+	for (int i = 0; i < 21; i++)
 	{
 		if (outprint == 1)
 			cout << "|";
-		for (j = 0; j < 21; j++)
+		for (int j = 0; j < 21; j++)
 		{
 			if (future[i][j] == 0)
 			{
