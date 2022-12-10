@@ -1,8 +1,12 @@
 #include <iostream>// istream ostream
 #include <string>//для класса string
+#include <stdio.h>//стандартный заголовочный файл
+#include <signal.h>//указания того, как программа обрабатывает сигналы
 using namespace std;
+void sigintHandler(int sig_num);//объявление функции
 int main() {
 	setlocale(0, "");//задаём локаль для программы
+	signal(SIGINT, sigintHandler);//обработка исключений
 	int M, zn = 0, ch = 0, s, q, N;//вводим перемнные int
 	int a[5][5];//создаем двумерный массив
 	cout << "Введимте M от 2 до 5: ";//выводим текст
@@ -95,4 +99,10 @@ int main() {
 	cout << a[q-1][N-1]<<endl;//вывод N-ного минимума в заданной строке
 	system("pause");//ставим систему на паузу
 }
+void sigintHandler(int sig_num)
+{
 
+	signal(SIGINT, sigintHandler);
+	printf("\n Неверный ввод. Попробуйте еще раз:  \n");
+	fflush(stdout);
+}
